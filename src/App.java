@@ -1,3 +1,4 @@
+import excepciones.CupoExcedidoException;
 import modelo.actividad.Actividad;
 import modelo.Estudiante;
 import modelo.EventoUniversitario;
@@ -25,17 +26,31 @@ public class App {
 
         evento1.asignarSala(sala1);
 
-        evento1.crearActividad(1,"Proteccion de sistemas",30,"charla","si",false);
-        evento1.crearActividad(2,"Seguridad en internet",20,"taller","no",true);
+        evento1.crearActividad(1,"Proteccion de sistemas",10,"charla","si",false);
+        evento1.crearActividad(2,"Seguridad en internet",1,"taller","no",true);
 
         Actividad act1 =evento1.getActividad(1);
         Actividad act2 =evento1.getActividad(2);
-
-        act1.inscribir(alumno1);
-        act1.inscribir(alumno2);
-        act2.inscribir(alumno2);
-        act2.inscribir(alumno3);
-
+        try {
+            act1.inscribir(alumno1);
+        }catch (CupoExcedidoException e){
+            System.out.println("error al escribir: "+ e.getMessage());
+        }
+        try {
+            act1.inscribir(alumno2);
+        }catch (CupoExcedidoException e){
+            System.out.println("error al escribir: "+ e.getMessage());
+        }
+        try {
+            act2.inscribir(alumno2);
+        }catch (CupoExcedidoException e){
+            System.out.println("error al escribir: "+ e.getMessage());
+        }
+        try {
+            act2.inscribir(alumno3);
+        }catch (CupoExcedidoException e){
+            System.out.println("error al escribir: "+ e.getMessage());
+        }
         evento1.mostrarDatos();
 
         System.out.println("cantidad de eventos "+EventoUniversitario.getCantidadEventos());

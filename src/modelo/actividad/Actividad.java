@@ -1,5 +1,6 @@
 package modelo.actividad;
 
+import excepciones.CupoExcedidoException;
 import modelo.Estudiante;
 import modelo.Inscripcion;
 
@@ -20,7 +21,10 @@ public abstract class Actividad {
         this.cupoMaximo = cupoMaximo;
     }
 
-    public Inscripcion inscribir(Estudiante estudiante){
+    public Inscripcion inscribir(Estudiante estudiante)throws CupoExcedidoException {
+        if (inscripciones.size() ==cupoMaximo) {
+            throw new CupoExcedidoException("no se puede inscribir al alumno "+ estudiante.getNombre()+" cupo maximo alcanzado");
+        }
         Inscripcion nuevaInscripcion = new Inscripcion(LocalDate.now(),"INSCRIPTO",estudiante,this);
         this.inscripciones.add(nuevaInscripcion);
         return nuevaInscripcion;

@@ -1,6 +1,8 @@
 package modelo.actividad;
 
-public class Taller extends Actividad{
+import java.io.Serializable;
+
+public class Taller extends Actividad implements Serializable {
     private boolean requiereNotebook;
 
     public Taller (int id,String titulo, int cupoMaximo, boolean requiereNotebook){

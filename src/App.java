@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import excepciones.CupoExcedidoException;
 import modelo.actividad.Actividad;
 import modelo.Estudiante;
@@ -26,34 +28,48 @@ public class App {
 
         evento1.asignarSala(sala1);
 
-        evento1.crearActividad(1,"Proteccion de sistemas",10,"charla","si",false);
-        evento1.crearActividad(2,"Seguridad en internet",1,"taller","no",true);
+        evento1.crearActividad(1,"Proteccion de sistemas",1,"charla","si",false);
+        evento1.crearActividad(2,"Seguridad en internet",2,"taller","no",true);
 
         Actividad act1 =evento1.getActividad(1);
         Actividad act2 =evento1.getActividad(2);
         try {
-            act1.inscribir(alumno1);
-        }catch (CupoExcedidoException e){
-            System.out.println("error al escribir: "+ e.getMessage());
+            try {
+                act1.inscribir(alumno1);
+            } catch (CupoExcedidoException e) {
+                System.out.println("error al inscribir: " + e.getMessage());
+            }
+            try {
+                act1.inscribir(alumno2);
+            } catch (CupoExcedidoException e) {
+                System.out.println("error al inscribir: " + e.getMessage());
+            }
+            try {
+                act2.inscribir(alumno2);
+            } catch (CupoExcedidoException e) {
+                System.out.println("error al inscribir: " + e.getMessage());
+            }
+            try {
+                act2.inscribir(alumno3);
+            } catch (CupoExcedidoException e) {
+                System.out.println("error al inscribir: " + e.getMessage());
+            }
+            try {
+                evento1.persistirEventos();
+                EventoUniversitario copiaDesdeArchivo = evento1.recuperarEvento(evento1.getId());
+                evento1.mostrarDatos();
+                copiaDesdeArchivo.mostrarDatos();
+            } catch (FileNotFoundException e) {
+                System.out.println("error no se encontro el archivo del evento: " + e.getMessage());
+            } catch (ClassNotFoundException e) {
+                System.out.println("no se pudo reconstruir el objeto almacenado: " + e.getMessage());
+            } catch (IOException e) {
+                System.out.println("error en las entradas/salidas: " + e.getMessage());
+            }
+        }finally{
+            System.out.println("cantidad de eventos "+EventoUniversitario.getCantidadEventos());
+            System.out.println("PROGRAMA FINALIZADO");
         }
-        try {
-            act1.inscribir(alumno2);
-        }catch (CupoExcedidoException e){
-            System.out.println("error al escribir: "+ e.getMessage());
-        }
-        try {
-            act2.inscribir(alumno2);
-        }catch (CupoExcedidoException e){
-            System.out.println("error al escribir: "+ e.getMessage());
-        }
-        try {
-            act2.inscribir(alumno3);
-        }catch (CupoExcedidoException e){
-            System.out.println("error al escribir: "+ e.getMessage());
-        }
-        evento1.mostrarDatos();
-
-        System.out.println("cantidad de eventos "+EventoUniversitario.getCantidadEventos());
 
     }
 }

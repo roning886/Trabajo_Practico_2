@@ -4,9 +4,10 @@ import modelo.actividad.Actividad;
 import modelo.actividad.Charla;
 import modelo.actividad.Taller;
 
+import java.io.*;
 import java.util.ArrayList;
 
-public class EventoUniversitario {
+public class EventoUniversitario implements Serializable{
     private final String id;
     private String titulo;
     private double costoBase;
@@ -80,6 +81,20 @@ public class EventoUniversitario {
              Actividad taller=new Taller(id,titulo,cupo,requiereNotebook);
              this.actividades.add(taller);
          }
+    }
+
+    public boolean persistirEventos()throws IOException {
+        String nombreArchivo = "evento_"+this.id+".dat";
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nombreArchivo))){
+            oos.writeObject(this);
+            return true;
+        }
+    }
+    public EventoUniversitario recuperarEvento(String id) throws IOException, ClassNotFoundException{
+        String nombreArchivo = "evento_"+id +".dat";
+        try(ObjectInputStream ois=new ObjectInputStream(new FileInputStream(nombreArchivo))){
+            return(EventoUniversitario) ois.readObject();
+        }
     }
 
     //SETTER Y GETTER

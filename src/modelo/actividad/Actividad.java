@@ -6,8 +6,9 @@ import modelo.Inscripcion;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public abstract class Actividad {
+public abstract class Actividad implements Serializable {
     protected int id;
     protected String titulo;
     protected int cupoMaximo;
@@ -23,7 +24,7 @@ public abstract class Actividad {
 
     public Inscripcion inscribir(Estudiante estudiante)throws CupoExcedidoException {
         if (inscripciones.size() ==cupoMaximo) {
-            throw new CupoExcedidoException("no se puede inscribir al alumno "+ estudiante.getNombre()+" cupo maximo alcanzado");
+            throw new CupoExcedidoException("no se puede inscribir al alumno "+ estudiante.getNombre()+", cupo maximo alcanzado");
         }
         Inscripcion nuevaInscripcion = new Inscripcion(LocalDate.now(),"INSCRIPTO",estudiante,this);
         this.inscripciones.add(nuevaInscripcion);

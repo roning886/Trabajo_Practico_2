@@ -1,8 +1,11 @@
 package modelo.actividad;
 
+import modelo.Estudiante;
+import modelo.certificacion.Certificable;
+
 import java.io.Serializable;
 
-public class Taller extends Actividad implements Serializable {
+public class Taller extends Actividad implements Certificable,Serializable {
     private boolean requiereNotebook;
 
     public Taller (int id,String titulo, int cupoMaximo, boolean requiereNotebook){
@@ -25,4 +28,7 @@ public class Taller extends Actividad implements Serializable {
         return "TALLER";
     }
 
+    public String generarCertificado(Estudiante estudiante) {
+        return "";
+    }
 }

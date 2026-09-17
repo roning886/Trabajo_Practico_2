@@ -2,10 +2,13 @@ package modelo;
 
 import modelo.actividad.Actividad;
 import modelo.actividad.Charla;
+import modelo.actividad.Curso;
 import modelo.actividad.Taller;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class EventoUniversitario implements Serializable{
     private final String id;
@@ -51,6 +54,10 @@ public class EventoUniversitario implements Serializable{
         System.out.println( "COSTO ESTIMADO "+ calcularCostoEstimado() );
     }
 
+    public List<Actividad> getActividades() {
+        return Collections.unmodifiableList(actividades);
+    }
+
     public Actividad getActividad(int id){
         for(Actividad a: this.actividades){
             if ( a.getId() == id ){
@@ -73,14 +80,18 @@ public class EventoUniversitario implements Serializable{
         }
         return (costoBase+costoEstimado)*1.21;
     }
-    public void crearActividad(int id, String titulo, int cupo, String tipoActividad,String disertante, boolean requiereNotebook){
+    public void crearActividad(int id, String titulo, int cupo, String tipoActividad,String disertante, boolean requiereNotebook,int nivel){
          if (tipoActividad.equalsIgnoreCase("charla")) {
              Actividad charla =new Charla(id,titulo,cupo,disertante);
              this.actividades.add(charla);
          }else if(tipoActividad.equalsIgnoreCase("taller")){
              Actividad taller=new Taller(id,titulo,cupo,requiereNotebook);
              this.actividades.add(taller);
-         }
+         }else if(tipoActividad.equalsIgnoreCase("curso")){
+             Actividad curso=new Curso(id,titulo,cupo,nivel);
+             this.actividades.add(curso);
+
+        }
     }
 
     public boolean persistirEventos()throws IOException {

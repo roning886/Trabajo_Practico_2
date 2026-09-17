@@ -1,10 +1,12 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import excepciones.CupoExcedidoException;
+import modelo.Inscripcion;
 import modelo.actividad.Actividad;
 import modelo.Estudiante;
 import modelo.EventoUniversitario;
 import modelo.Sala;
+import modelo.certificacion.Certificable;
 
 import java.util.ArrayList;
 
@@ -28,11 +30,13 @@ public class App {
 
         evento1.asignarSala(sala1);
 
-        evento1.crearActividad(1,"Proteccion de sistemas",1,"charla","si",false);
-        evento1.crearActividad(2,"Seguridad en internet",2,"taller","no",true);
+        evento1.crearActividad(1,"Proteccion de sistemas",1,"charla","si",false,1);
+        evento1.crearActividad(2,"Seguridad en internet",2,"taller","no",true,1);
+        evento1.crearActividad(3,"instalar linux",1,"curso","Si",false,2);
 
         Actividad act1 =evento1.getActividad(1);
         Actividad act2 =evento1.getActividad(2);
+        Actividad act3 = evento1.getActividad(3);
         try {
             try {
                 act1.inscribir(alumno1);
@@ -55,6 +59,11 @@ public class App {
                 System.out.println("error al inscribir: " + e.getMessage());
             }
             try {
+                act3.inscribir(alumno3);
+            } catch (CupoExcedidoException e) {
+                System.out.println("error al inscribir: " + e.getMessage());
+            }
+            try {
                 evento1.persistirEventos();
                 EventoUniversitario copiaDesdeArchivo = evento1.recuperarEvento(evento1.getId());
                 evento1.mostrarDatos();
@@ -69,6 +78,18 @@ public class App {
         }finally{
             System.out.println("cantidad de eventos "+EventoUniversitario.getCantidadEventos());
             System.out.println("PROGRAMA FINALIZADO");
+        }
+        //emitir los certificados
+        for(Actividad actividades:evento1.getActividades()){
+            if(actividades instanceof Certificable certificable){
+                System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+                        "|certificados de la actividad");
+                for(Inscripcion inscripciones:actividades.getInscripciones()){
+                    String certificado = certificable.generarCertificado(inscripciones.getEstudiante());
+                    System.out.println(certificado);
+                }
+            }
+
         }
 
     }

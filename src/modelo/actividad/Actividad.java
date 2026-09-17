@@ -43,6 +43,7 @@ public abstract class Actividad implements Serializable {
     public abstract double calcularCostoMateriales();
     public abstract String getTipo();
 
+    public ArrayList<Inscripcion> getInscripciones(){return inscripciones;}
 
     public int getId() {
         return id;

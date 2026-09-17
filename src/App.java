@@ -6,9 +6,13 @@ import modelo.actividad.Actividad;
 import modelo.Estudiante;
 import modelo.EventoUniversitario;
 import modelo.Sala;
+import modelo.actividad.Charla;
+import modelo.actividad.Curso;
+import modelo.actividad.Taller;
 import modelo.certificacion.Certificable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class App {
     public static void main (String [] args ){
@@ -77,7 +81,6 @@ public class App {
             }
         }finally{
             System.out.println("cantidad de eventos "+EventoUniversitario.getCantidadEventos());
-            System.out.println("PROGRAMA FINALIZADO");
         }
         //emitir los certificados
         for(Actividad actividades:evento1.getActividades()){
@@ -91,6 +94,20 @@ public class App {
             }
 
         }
+        List<Taller> talleres = evento1.filtrarActividadesPorTipo(Taller.class);
+        List<Curso>  cursos=evento1.filtrarActividadesPorTipo(Curso.class);
+        List<Charla> charlas=evento1.filtrarActividadesPorTipo(Charla.class);
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+                +"Actividades filtradas por tipo: ");
+        System.out.println("Charlas encontradas: "+ charlas.size());
+        System.out.println("Talleres econtrados: "+ talleres.size());
+        System.out.println("cursos encontrados: "+ cursos.size());
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+                +"Costo de materiales de cada actividad");
+        System.out.println("talleres");
+
 
     }
 }

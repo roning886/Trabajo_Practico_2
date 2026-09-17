@@ -29,7 +29,6 @@ public class Taller extends Actividad implements Certificable,Serializable {
     }
 
     public String generarCertificado(Estudiante estudiante) {
-        return  "|_________________________________________________________________________________________________________________________________\n"+
-                "|Nombre del estudiante: "+estudiante.getNombre()+ "| legajo: "+estudiante.getLegajo()+"| Nombre de la Actividad: "+getTitulo()+"| Entidad Emisora: "+  ENTIDAD_EMISORA;
+        return "|Nombre del estudiante: "+estudiante.getNombre()+ "| legajo: "+estudiante.getLegajo()+"| Nombre de la Actividad: "+getTitulo()+"| Entidad Emisora: "+  ENTIDAD_EMISORA;
     }
 }

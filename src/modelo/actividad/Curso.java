@@ -23,7 +23,6 @@ public class Curso extends Actividad implements Certificable, Serializable {
         return "Curso";
     }
     public String generarCertificado(Estudiante estudiante) {
-        return  "|_________________________________________________________________________________________________________________________________\n"+
-                "|Nombre del estudiante: "+estudiante.getNombre()+ "| legajo: "+estudiante.getLegajo()+"| Nombre de la Actividad: "+getTitulo()+"| Entidad Emisora: "+  ENTIDAD_EMISORA;
+        return "|Nombre del estudiante: "+estudiante.getNombre()+ "| legajo: "+estudiante.getLegajo()+"| Nombre de la Actividad: "+getTitulo()+"| Entidad Emisora: "+  ENTIDAD_EMISORA;
     }
 }
